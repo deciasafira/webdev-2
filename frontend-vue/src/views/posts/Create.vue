@@ -42,7 +42,8 @@ export default {
         //state posts
         const post = reactive({
             title: '',
-            content: ''
+            content: '',
+            date:''
         })
 
         //state validation
@@ -56,10 +57,11 @@ export default {
 
             let title   = post.title
             let content = post.content
+            let date = post.date
 
             axios.post('http://localhost:3000/api/posts/store', {
                 title: title,
-                content: content
+                content: content,
             }).then(() => {
 
                 //redirect ke post index

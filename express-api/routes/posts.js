@@ -12,7 +12,7 @@ const connection = require('../config/database');
  */
 router.get('/', function (req, res) {
     //query
-    connection.query('SELECT * FROM posts ORDER BY id desc', function (err, rows) {
+    connection.query('SELECT * FROM journal ORDER BY id desc', function (err, rows) {
         if (err) {
             return res.status(500).json({
                 status: false,
@@ -35,26 +35,34 @@ router.get('/', function (req, res) {
 
     //validation
     body('title').notEmpty(),
-    body('content').notEmpty()
+    body('content').notEmpty(),
+    // body('date').notEmpty()
 
 ], (req, res) => {
 
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(422).json({
+        return res.status(404).json({
             errors: errors.array()
         });
     }
 
     //define formData
     let formData = {
-        title: req.body.title,
-        content: req.body.content
+        question_1: "pertanyaan 1 ?",
+        answer_1: req.body.answer_1,
+        question_2: "pertanyaan 2 ?",
+        answer_2: req.body.answer_2,
+        question_3: "pertanyaan 3 ?",
+        answer_3: req.body.answer_3,
+        question_4: "pertanyaan 4 ?",
+        answer_4: req.body.answer_4,
+        date_published: new Date()
     }
 
     // insert query
-    connection.query('INSERT INTO posts SET ?', formData, function (err, rows) {
+    connection.query('INSERT INTO journal SET ?', formData, function (err, rows) {
         //if(err) throw err
         if (err) {
             console.log(err)
@@ -133,7 +141,7 @@ router.get('/', function (req, res) {
     //data post
     let formData = {
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
     }
 
     // update query

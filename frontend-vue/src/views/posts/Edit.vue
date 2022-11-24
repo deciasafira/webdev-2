@@ -63,7 +63,7 @@ export default {
               
               //assign state posts with response data
               post.title    = response.data.data.title  
-              post.content  = response.data.data.content  
+              post.content  = response.data.data.content 
 
             }).catch(error => {
                 console.log(error.response.data)
@@ -76,10 +76,12 @@ export default {
 
             let title   = post.title
             let content = post.content
+            let date = post.date
 
             axios.patch(`http://localhost:3000/api/posts/update/${route.params.id}`, {
                 title: title,
-                content: content
+                content: content,
+                date: date,
             }).then(() => {
 
                 //redirect ke post index
