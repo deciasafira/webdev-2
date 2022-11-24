@@ -8,9 +8,15 @@ const port = 3000
 // const postsRouter = require('./routes/posts');
 const journalRoute = require("./routes/journal");
 
-mongoose.connect("mongodb://localhost:27017/journal").then(()=> {
-  console.log("Connected to MongoDB")
-})
+mongoose
+	.connect("mongodb://127.0.0.1/journal")
+	.then(() => {
+		console.log("Database Connected!");
+	})
+	.catch((err) => {
+		console.log(`Cannot connect to database`, err);
+		process.exit();
+	});
 //import library CORS
 const cors = require('cors')
 

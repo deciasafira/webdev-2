@@ -25,4 +25,30 @@ route.post("/", async (req,res) => {
     }
 })
 
+route.post("/newdate", async (req,res) => {
+    const date = req.body.date;
+
+    const schema = new Journal({
+        date: new Date(date)
+    })
+    try {
+        const schemaCreate = await schema.save()
+        res.json(schemaCreate)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+route.patch("/:id", async (req,res)=> {
+    let response = await Journal.findById(req.params.id);
+
+    response.journal = req.body.question
+    try {
+        const updatedJournal = await response.save();
+        res.json(updatedJournal);
+    } catch (error) {
+        res.status.send(error)
+    }
+})
+
 module.exports = route;
