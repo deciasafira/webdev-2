@@ -5,22 +5,22 @@
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
-                        <h4>My Journal</h4>
+                        <div class="d-flex justify-content-between">
+                            <h4>My Journal</h4>
+                            <router-link :to="{name: 'posts.create'}" class="btn btn-md btn-success">Add Date</router-link>
+                        </div>
                         <hr>
-                        <router-link :to="{name: 'posts.create'}" class="btn btn-md btn-success">Create My Jurnal</router-link>
 
-                        <div class="row mt-4" >
+                        <!-- <div class="row mt-4" >
                             <div class="col-3 my-3" v-for="(post, index) in posts" :key="index">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ post.question_1 }}</h5>
                                         <h6 class="card-subtitle mb-2 text-muted">{{ new Date(post.date_published).toLocaleDateString() }}</h6>
                                         <p class="card-text">{{ post.answer_1}}</p>
-                                              <!-- Button trigger modal -->
                                             <router-link :to="{name: 'posts.edit', params:{id: post.id }}" class="btn btn-sm btn-primary me-2">EDIT</router-link>
                                             <button @click.prevent="postDelete(post.id)" class="btn btn-sm btn-danger ml-1">DELETE</button>
 
-                                            <!-- Modal -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -43,8 +43,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> -->
+                        <!-- dibawah ini tabel -->
                         
 
                     </div>

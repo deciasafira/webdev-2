@@ -30,61 +30,6 @@
     </div>
 </template>
 
-<script>
-import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
+<script setup>
 
-export default {
-
-    setup() {
-
-        //state posts
-        const post = reactive({
-            title: '',
-            content: '',
-            date:''
-        })
-
-        //state validation
-        const validation = ref([])
-
-        //vue router
-        const router = useRouter()
-
-        //method store
-        function store() {
-
-            let title   = post.title
-            let content = post.content
-            let date = post.date
-
-            axios.post('http://localhost:3000/api/posts/store', {
-                title: title,
-                content: content,
-            }).then(() => {
-
-                //redirect ke post index
-                router.push({
-                    name: 'posts.index'
-                })
-
-            }).catch(error => {
-                //assign state validation with error 
-                validation.value = error.response.data
-            })
-
-        }
-
-        //return
-        return {
-            post,
-            validation,
-            router,
-            store
-        }
-
-    }
-
-}
 </script>
