@@ -9,7 +9,7 @@ const port = 3000
 const journalRoute = require("./routes/journal");
 
 mongoose
-	.connect("mongodb://127.0.0.1/journal")
+	.connect("mongodb+srv://decia:decia@decia.rix4qvb.mongodb.net/journal")
 	.then(() => {
 		console.log("Database Connected!");
 	})
