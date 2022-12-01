@@ -16,10 +16,7 @@
               <router-link :to="{name: 'posts.index'}" class="nav-link">POSTS</router-link>
             </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success" type="submit">Search</button>
-          </form>
+          
         </div>
       </div>
     </nav>

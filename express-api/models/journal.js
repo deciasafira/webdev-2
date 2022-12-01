@@ -5,7 +5,7 @@ const journalSchema = mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
-    journal: [
+    journals: [
         {
             question: String,
             answer: String,

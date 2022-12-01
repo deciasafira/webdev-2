@@ -4,25 +4,19 @@
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
-                        <h4>EDIT POST</h4>
+                        <h4>New Date</h4>
                         <hr>
-                        <div v-if="validation.errors" class="mt-2 alert alert-danger">
-                            <ul class="mt-0 mb-0">
-                                <li v-for="(error, index) in validation.errors" :key="index">{{ `${error.param} : ${error.msg}` }}</li>
-                            </ul>
-                        </div>
-                        <form @submit.prevent="update">
+                        <div class="d-flex justify-content-center">
                             <div class="form-group">
-                                <label for="title" class="font-weight-bold mb-2">TITLE</label>
-                                <input type="text" class="form-control" v-model="post.title" placeholder="Masukkan Judul Post">
+                                <label for="title" class="font-weight-bold mb-2">Question</label>
+                                <input type="text" class="form-control" v-model="question" placeholder="Masukkan Judul Post">
                             </div>
                             <div class="form-group mt-3">
-                                <label for="content" class="font-weight-bold mb-2">CONTENT</label>
-                                <textarea class="form-control" rows="4" v-model="post.content" placeholder="Masukkan Konten Post"></textarea>
+                                <label for="content" class="font-weight-bold mb-2">Answer</label>
+                                <textarea class="form-control" rows="4" v-model="answer" placeholder="Masukkan Konten Post"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">UPDATE</button>
-                        </form>                        
-
+                                <router-link class="btn btn-primary" :to="{name: 'Detail', params : {id : router.params.Journalid}}" @click="editJournal()"> Edit </router-link>
+                        </div>                
                     </div>
                 </div>
             </div>
@@ -30,81 +24,35 @@
     </div>
 </template>
 
-<script>
-import { reactive, ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import axios from 'axios'
+<script setup>
+import axios from "axios"
+import { useRoute } from "vue-router";
+import { ref } from "vue"
 
-export default {
+const router = useRoute()
+const question = ref(null)
+const answer = ref(null)
 
-    setup() {
-
-        //state posts
-        const post = reactive({
-            title: '',
-            content: ''
-        })
-
-        //state validation
-        const validation = ref([])
-
-        //vue router
-        const router = useRouter()
-
-        //vue router
-        const route = useRoute()
-
-        //mounted
-        onMounted(() => {
-
-            //get API from Backend
-            axios.get(`http://localhost:3000/api/posts/${route.params.id}`)
-            .then(response => {
-              
-              //assign state posts with response data
-              post.title    = response.data.data.title  
-              post.content  = response.data.data.content 
-
-            }).catch(error => {
-                console.log(error.response.data)
-            })
-
-        })
-
-        //method update
-        function update() {
-
-            let title   = post.title
-            let content = post.content
-            let date = post.date
-
-            axios.patch(`http://localhost:3000/api/posts/update/${route.params.id}`, {
-                title: title,
-                content: content,
-                date: date,
-            }).then(() => {
-
-                //redirect ke post index
-                router.push({
-                    name: 'posts.index'
-                })
-
-            }).catch(error => {
-                //assign state validation with error 
-                validation.value = error.response.data
-            })
-
-        }
-
-        //return
-        return {
-            post,
-            validation,
-            router,
-            update
-        }
-
+const getJournal = async (id) => {
+    let Journal = []
+    const response = await axios.get(`http://localhost:3000/api/journal/detail/${id}`)
+    Journal.push(response.data.journals)
+    console.log(Journal[0].length)
+    for (let index = 0; index < Journal[0].length; index++) {
+        if (Journal[0][index]._id == router.params.id) {
+            question.value = Journal[0][index].question
+            answer.value = Journal[0][index].answer ? Journal[0][index].answer : ""
+        }        
     }
+}
+getJournal(router.params.Journalid)
 
+const editJournal = async () => {
+    console.log(answer.value)
+    const response = await axios.put(`http://localhost:3000/api/journal/${router.params.Journalid}/${router.params.id}`, {
+        answer : answer.value
+    })
+    console.log(response.data)
+    router.push({name : "Detail", params: {id : router.params.id}})
 }
 </script>

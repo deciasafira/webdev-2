@@ -11,42 +11,26 @@
                         </div>
                         <hr>
 
-                        <!-- <div class="row mt-4" >
-                            <div class="col-3 my-3" v-for="(post, index) in posts" :key="index">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ post.question_1 }}</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">{{ new Date(post.date_published).toLocaleDateString() }}</h6>
-                                        <p class="card-text">{{ post.answer_1}}</p>
-                                            <router-link :to="{name: 'posts.edit', params:{id: post.id }}" class="btn btn-sm btn-primary me-2">EDIT</router-link>
-                                            <button @click.prevent="postDelete(post.id)" class="btn btn-sm btn-danger ml-1">DELETE</button>
-
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ...
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
+                    
                         <!-- dibawah ini tabel -->
                         
+                        <table class="table">
+                            <tbody v-for="journal in journals" :key="journal._id">
+                                <tr @dblclick="journalDelete(journal._id)">
+                                    <td class="d-flex justify-content-center" >
+                                        <router-link class="tanggal" :to="{ name: 'Detail', params: {id : journal._id} }" >{{ new Date(journal.date).toLocaleDateString() }}</router-link>
+                                    </td>
+                                </tr>
+                            </tbody>
 
+                            <!-- check if current date is already added  -->
+                            <!-- <tr v-if=""> 
+
+                                <td class="d-flex justify-content-center">
+                                    {{ new Date().toLocaleDateString() }}
+                                </td>
+                            </tr> -->
+                        </table>
                     </div>
                 </div>
             </div>
@@ -54,62 +38,39 @@
     </div>
 </template>
 
-<script>
-import axios from 'axios'
-import { onMounted, ref } from 'vue'
+<script setup>
+import axios from "axios"
+import { ref } from "vue"
 
-export default {
-    setup() {
+const journals = ref([])
 
-        //reactive state
-        let posts = ref([])
-
-        //mounted
-        onMounted(() => {
-
-           //panggil function "getDataPosts" 
-           getDataPosts()
-
-        })
-
-        //function "getDataPosts"
-        function getDataPosts() {
-
-            //get API from Express Backend
-            axios.get('http://localhost:3000/api/posts')
-            .then(response => {
-              
-              //assign state posts with response data
-              posts.value = response.data.data
-              console.log(response.data.data)
-            }).catch(error => {
-                console.log(error.response.data)
-            })
-        }
-
-
-// function "postDelete"
-    function postDelete(id) {
-
-    //delete data post by ID
-    axios.delete(`http://localhost:3000/api/posts/delete/${id}`)
-    .then(() => {
-
-        //panggil function "getDataPosts"  
-        getDataPosts()
-
-    }).catch(error => {
-        console.log(error.response.data)
+const getDataJournals = async () => {
+    //get API from Express Backend
+    const response = await axios.get('http://localhost:3000/api/journal/')
+    journals.value = response.data.sort(function(a,b) {
+        return new Date(a.date) - new Date(b.date)
     })
-    }
+    // console.log(journals.value)
+}
 
-    
-    //return
-        return {
-            posts,
-            getDataPosts,
-            postDelete		// <-- function "postDelete"
-        }
-    }
+getDataJournals()
+
+const journalDelete = async (id) => {
+    //delete data post by ID
+    await axios.delete(`http://localhost:3000/api/journal/${id}`)
+    getDataJournals();
 }
 </script>
+
+<style scoped>
+.tanggal {
+    background-color:moccasin;
+    border-radius: 25px;
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+</style>
