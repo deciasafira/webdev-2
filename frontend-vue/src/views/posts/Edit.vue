@@ -6,12 +6,12 @@
                     <div class="card-body">
                         <h4>New Date</h4>
                         <hr>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-grid justify-content-center">
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold mb-2">Question</label>
                                 <input type="text" class="form-control" v-model="question" placeholder="Masukkan Judul Post">
                             </div>
-                            <div class="form-group mt-3">
+                            <div class="form-group">
                                 <label for="content" class="font-weight-bold mb-2">Answer</label>
                                 <textarea class="form-control" rows="4" v-model="answer" placeholder="Masukkan Konten Post"></textarea>
                             </div>

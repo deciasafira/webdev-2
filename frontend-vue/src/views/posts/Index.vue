@@ -10,27 +10,19 @@
                             <router-link :to="{name: 'posts.create'}" class="btn btn-md btn-success">Add Date</router-link>
                         </div>
                         <hr>
-
-                    
-                        <!-- dibawah ini tabel -->
-                        
-                        <table class="table">
-                            <tbody v-for="journal in journals" :key="journal._id">
-                                <tr @dblclick="journalDelete(journal._id)">
-                                    <td class="d-flex justify-content-center" >
-                                        <router-link class="tanggal" :to="{ name: 'Detail', params: {id : journal._id} }" >{{ new Date(journal.date).toLocaleDateString() }}</router-link>
-                                    </td>
-                                </tr>
-                            </tbody>
-
-                            <!-- check if current date is already added  -->
-                            <!-- <tr v-if=""> 
-
-                                <td class="d-flex justify-content-center">
-                                    {{ new Date().toLocaleDateString() }}
-                                </td>
-                            </tr> -->
-                        </table>
+                        <div class="container">
+                            <div class="row">
+                            <div class="col my-2 col-3" v-for="journal in journals" :key="journal._id">
+                                <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title d-flex justify-content-center"> {{ new Date(journal.date).toLocaleDateString() }}</h5>
+                                    <router-link :to="{ name: 'Detail', params: { id: journal._id,  }}" class="card-link">Detail</router-link>
+                                    <a @click="journalDelete(journal._id)" class="card-link">Delete</a>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

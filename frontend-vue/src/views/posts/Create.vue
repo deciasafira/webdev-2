@@ -58,7 +58,7 @@ const AddDateJournal = async (data) => {
             journal : QNA
         })
         if (date.data.message) throw date.data.message
-        router.push({ name: "posts.index" })
+        router.push({ name: "Detail", params: {id:date.data._id} })
     } catch (error) {
         validation.value = error        
     }
