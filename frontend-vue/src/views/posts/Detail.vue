@@ -37,7 +37,7 @@ const router = useRoute();
 const detailJournal = ref([])
 
 const getDetailJournal = async (id) => {
-    const response = await axios.get(`http://localhost:3000/api/journal/detail/${id}`)
+    const response = await axios.get(`https://expressapi.herokuapp.com/api/journal/detail/${id}`)
     detailJournal.value = response.data
 }
 

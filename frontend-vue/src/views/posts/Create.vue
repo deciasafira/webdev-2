@@ -53,7 +53,7 @@ const AddDateJournal = async (data) => {
                 question: "What did I learn today",
                 answer: ""
             }]
-        const date = await axios.post("http://localhost:3000/api/journal/newdate", {
+        const date = await axios.post("https://expressapi.herokuapp.com/api/journal/newdate", {
             date : data,
             journal : QNA
         })

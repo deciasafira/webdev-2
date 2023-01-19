@@ -38,7 +38,7 @@ const journals = ref([])
 
 const getDataJournals = async () => {
     //get API from Express Backend
-    const response = await axios.get('http://localhost:3000/api/journal/')
+    const response = await axios.get('https://expressapi.herokuapp.com/api/journal/')
     journals.value = response.data.sort(function(a,b) {
         return new Date(a.date) - new Date(b.date)
     })
@@ -49,7 +49,7 @@ getDataJournals()
 
 const journalDelete = async (id) => {
     //delete data post by ID
-    await axios.delete(`http://localhost:3000/api/journal/${id}`)
+    await axios.delete(`https://expressapi.herokuapp.com/api/journal/${id}`)
     getDataJournals();
 }
 </script>

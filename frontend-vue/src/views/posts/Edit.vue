@@ -35,7 +35,7 @@ const answer = ref(null)
 
 const getJournal = async (id) => {
     let Journal = []
-    const response = await axios.get(`http://localhost:3000/api/journal/detail/${id}`)
+    const response = await axios.get(`https://expressapi.herokuapp.com/api/journal/detail/${id}`)
     Journal.push(response.data.journals)
     console.log(Journal[0].length)
     for (let index = 0; index < Journal[0].length; index++) {
@@ -49,7 +49,7 @@ getJournal(router.params.Journalid)
 
 const editJournal = async () => {
     console.log(answer.value)
-    const response = await axios.put(`http://localhost:3000/api/journal/${router.params.Journalid}/${router.params.id}`, {
+    const response = await axios.put(`https://expressapi.herokuapp.com/api/journal/${router.params.Journalid}/${router.params.id}`, {
         answer : answer.value
     })
     console.log(response.data)
